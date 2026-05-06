@@ -1,27 +1,27 @@
-server:
-  port: 8085
-
 spring:
-  application:
-    name: gateway-jwr
-  main:
-    web-application-type: reactive
   cloud:
     gateway:
-      server:
-        webflux:
-          routes:
-            - id: usuarios-service
-              uri: http://localhost:8081
-              predicates:
-                - Path=/usuarios,/usuarios/**
-            - id: productos-service
-              uri: http://localhost:8082
-              predicates:
-                - Path=/productos,/productos/**
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,gateway
+      routes:
+        # Microservicio de Usuarios
+        - id: ms-usuarios
+          uri: http://localhost:8085 # Cambia por el puerto real de ms_usuarios
+          predicates:
+            - Path=/api/usuarios/**
+            
+        # Microservicio de Alertas
+        - id: ms-alertas
+          uri: http://localhost:8083 # Cambia por el puerto real de ms_alertas
+          predicates:
+            - Path=/api/alertas/**
+            
+        # Microservicio de Reportes
+        - id: ms-reportes
+          uri: http://localhost:8084 # Cambia por el puerto real de ms_reportes
+          predicates:
+            - Path=/api/reportes/**
+            
+        # Microservicio de Monitoreo
+        - id: ms-monitoreo
+          uri: http://localhost:8082 # Cambia por el puerto real de ms_monitoreo
+          predicates:
+            - Path=/api/monitoreo/**
