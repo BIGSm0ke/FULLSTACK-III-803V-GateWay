@@ -1,5 +1,9 @@
+server:
+  port: 8080
 spring:
   cloud:
+    application:
+      name: gateway-service
     gateway:
       routes:
         # Microservicio de Usuarios
