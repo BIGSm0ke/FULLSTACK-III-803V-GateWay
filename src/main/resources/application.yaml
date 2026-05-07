@@ -1,27 +1,44 @@
+server:
+  port: 8080
+
 spring:
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
       routes:
-        # Microservicio de Usuarios
+        # Microservicio de Usuarios (Auth + Perfil)
         - id: ms-usuarios
-          uri: http://localhost:8085 # Cambia por el puerto real de ms_usuarios
+          uri: http://127.0.0.1:8085
           predicates:
-            - Path=/api/usuarios/**
-            
+            - Path=/api/auth/**,/api/users/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+
         # Microservicio de Alertas
         - id: ms-alertas
-          uri: http://localhost:8083 # Cambia por el puerto real de ms_alertas
+          uri: http://127.0.0.1:8083
           predicates:
-            - Path=/api/alertas/**
-            
-        # Microservicio de Reportes
+            - Path=/api/alerts/**
+
+        # Microservicio de Reportes (rewrite reports -> reportes)
         - id: ms-reportes
-          uri: http://localhost:8084 # Cambia por el puerto real de ms_reportes
+          uri: http://127.0.0.1:8084
           predicates:
-            - Path=/api/reportes/**
-            
+            - Path=/api/reports/**
+          filters:
+            - RewritePath=/api/reports(?<segment>/?.*), /api/reportes$\{segment}
+
         # Microservicio de Monitoreo
         - id: ms-monitoreo
-          uri: http://localhost:8082 # Cambia por el puerto real de ms_monitoreo
+          uri: http://127.0.0.1:8082
           predicates:
             - Path=/api/monitoreo/**
