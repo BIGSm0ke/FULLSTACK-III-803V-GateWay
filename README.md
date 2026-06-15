@@ -32,8 +32,9 @@ Swagger: `http://localhost:8080/swagger-ui/index.html`
 .\mvnw.cmd verify      # tests + JaCoCo report
 ```
 
-Cobertura: **98.0%**
+Cobertura: **97.0%**
 
 ## Capturas
 
-> _(Agregar captura del reporte JaCoCo y Swagger UI)_
+<img width="907" height="107" alt="image" src="https://github.com/user-attachments/assets/49d6fe59-7400-43bc-8b70-d6c56a8b03f6" />
+
