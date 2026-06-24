@@ -9,36 +9,33 @@ spring:
           '[/**]':
             allowedOrigins:
               - "http://localhost:3000"
+              - "http://44.215.241.158"
             allowedMethods:
               - "*"
             allowedHeaders:
               - "*"
             allowCredentials: true
       routes:
-        # Microservicio de Usuarios (Auth + Perfil)
         - id: ms-usuarios
-          uri: http://127.0.0.1:8085
+          uri: http://ms-usuario:8085
           predicates:
             - Path=/api/auth/**,/api/users/**
           filters:
             - RewritePath=/api/(?<segment>.*), /$\{segment}
 
-        # Microservicio de Alertas
         - id: ms-alertas
-          uri: http://127.0.0.1:8083
+          uri: http://ms-alertas:8083
           predicates:
             - Path=/api/alerts/**
 
-        # Microservicio de Reportes (rewrite reports -> reportes)
         - id: ms-reportes
-          uri: http://127.0.0.1:8084
+          uri: http://ms-reportes:8084
           predicates:
             - Path=/api/reports/**
           filters:
             - RewritePath=/api/reports(?<segment>/?.*), /api/reportes$\{segment}
 
-        # Microservicio de Monitoreo
         - id: ms-monitoreo
-          uri: http://127.0.0.1:8082
+          uri: http://ms-monitoreo:8082
           predicates:
             - Path=/api/monitoreo/**
